@@ -3,8 +3,8 @@ import filecmp as fc
 import os
 from time import sleep
 
-test_files_path = './test_files'
-output_files_path = './output'
+cwd = os.getcwd()
+test_files_path = os.path.join(cwd, 'test_files')
 
 input_files = [
     os.path.join(test_files_path, 'input1.txt'),
@@ -19,9 +19,9 @@ expected_output_files = [
 ]
 
 output_files = [
-    os.path.join(output_files_path, 'out1.txt'),
-    os.path.join(output_files_path, 'out2.txt'),
-    os.path.join(output_files_path, 'out3.txt'),
+    os.path.join(cwd, 'out1.txt'),
+    os.path.join(cwd, 'out2.txt'),
+    os.path.join(cwd, 'out3.txt'),
 ]
 
 def run_test():
