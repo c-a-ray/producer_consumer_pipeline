@@ -2,7 +2,7 @@
 #define LINE_PROCESSOR
 
 #define MAX_INPUT_LINE 1000
-#define MAX_LINES 49
+#define MAX_LINES 50
 #define OUTPUT_LINE_LEN 80
 
 void *get_input(void *);
@@ -15,7 +15,7 @@ void put_buf_2(char);
 char read_buf_2(void);
 void put_buf_3(char);
 char read_buf_3(void);
-bool stop_token_found(char []);
+bool is_stop_line(char []);
 bool next_char_is_plus(void);
 
 #endif

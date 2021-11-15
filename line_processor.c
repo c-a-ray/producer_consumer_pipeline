@@ -7,7 +7,7 @@
 
 bool stop_processing = false;
 
-char buffer_1[MAX_INPUT_LINE * (MAX_LINES + 1)];
+char buffer_1[MAX_INPUT_LINE * MAX_LINES];
 pthread_mutex_t buf_1_mutex = PTHREAD_MUTEX_INITIALIZER;
 pthread_cond_t buf_1_full = PTHREAD_COND_INITIALIZER;
 bool buf_1_closed = false;
@@ -15,7 +15,7 @@ int buf_1_count = 0;
 int buf_1_prod_idx = 0;
 int buf_1_cons_idx = 0;
 
-char buffer_2[MAX_INPUT_LINE * (MAX_LINES + 1)];
+char buffer_2[MAX_INPUT_LINE * MAX_LINES];
 pthread_mutex_t buf_2_mutex = PTHREAD_MUTEX_INITIALIZER;
 pthread_cond_t buf_2_full = PTHREAD_COND_INITIALIZER;
 bool buf_2_closed = false;
@@ -23,7 +23,7 @@ int buf_2_count = 0;
 int buf_2_prod_idx = 0;
 int buf_2_cons_idx = 0;
 
-char buffer_3[MAX_INPUT_LINE * (MAX_LINES + 1)];
+char buffer_3[MAX_INPUT_LINE * MAX_LINES];
 pthread_mutex_t buf_3_mutex = PTHREAD_MUTEX_INITIALIZER;
 pthread_cond_t buf_3_full = PTHREAD_COND_INITIALIZER;
 int buf_3_count = 0;
@@ -56,7 +56,7 @@ void *get_input(void *args)
     
         for (int i = 0; i < strlen(input_buffer); i++)
         {            
-            if (stop_token_found(input_buffer))
+            if (is_stop_line(input_buffer))
             {
                 stop_processing = true;
                 pthread_cond_signal(&buf_1_full);
@@ -220,15 +220,18 @@ char read_buf_3(void)
     return ch;
 }
 
-bool stop_token_found(char line[])
+bool is_stop_line(char input_line[])
 {
-    if (line[0] == 'S')
-        if (line[1] == 'T')
-            if (line[2] == 'O')
-                if (line[3] == 'P')
-                    if (line[4] == '\n')
-                        return true;
-    return false;
+    char stop_line[6] = "STOP\n";
+
+    if (strlen(input_line) < strlen(stop_line))
+        return false;
+
+    for (int i = 0; i < strlen(stop_line); i++)
+        if (input_line[i] != stop_line[i])
+            return false;
+    
+    return true;
 }
 
 bool next_char_is_plus(void)
