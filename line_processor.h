@@ -4,6 +4,10 @@
 #define MAX_INPUT_LINE 1000
 #define MAX_LINES 50
 #define OUTPUT_LINE_LEN 80
+#define SPACE ' '
+#define NEWLINE '\n'
+#define PLUS_SIGN '+'
+#define CARET '^'
 
 void *get_input(void *);
 void *separate_line(void *);

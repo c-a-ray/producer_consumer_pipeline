@@ -38,13 +38,15 @@ def run_test():
     
     return True
         
+sp.call(['make'])
+sleep(.25)
 
 success = run_test()
 
 if success:
-    print("PASS")
+    print("\nPASS")
 else:
-    print("FAIL")
+    print("\nFAIL")
 
 for i in range(len(output_files)):
     os.remove(output_files[i])
